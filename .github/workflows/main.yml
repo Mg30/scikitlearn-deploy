@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - master
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_DEFAULT_REGION: us-east-1
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: deploy sklearn model to aws lamnda
+    steps:
+    - name: cloning repo
+      uses: actions/checkout@v2
+    - name: deployment
+      uses: Mg30/action-deploy-sklearn@v1
+      with:
+        service_name: apirestv1
+        stage: dev
+        aws_default_region : ${{env.AWS_DEFAULT_REGION}}
+        aws_s3_bucket: test-from-cli-tool
+        model_key: models/airbnb_regressor.pickle
+        model_version: ukGYJXZC9h5OlO1alQGxBOH9ZBqJ8Hqc
+

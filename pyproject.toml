@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "sklearn_deploy"
+version = "0.1.0"
+description = ""
+authors = ["matt <matgonzalez736@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+pandas = "boto3"
+pydantic = "^1.6.1"
+scikit-learn = "^0.23.2"
+typer = "^0.3.2"
+boto3 = "^1.14.58"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.0.1"
+
+
+
+[tool.poetry.scripts]
+cli = "sklearn_deploy.app:app"
+
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
