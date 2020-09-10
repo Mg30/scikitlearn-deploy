@@ -36,7 +36,8 @@ def upload(name: str, model: str, tag: str):
         s3.upload_file(model, name, key)
         typer.echo(f"{model} uploaded")
         objects = s3.list_object_versions(Bucket=name)
-        (latest,) = [obj for obj in objects["Versions"] if obj[" IsLatest"]]
+        latest = [obj for obj in objects["Versions"] if obj["IsLatest"]].pop()
+        version_id = latest["VersionId"]
         s3.put_object_tagging(
             Bucket=name,
             Key=key,
@@ -48,7 +49,7 @@ def upload(name: str, model: str, tag: str):
                     }
                 ],
             },
-            VersionId=latest,
+            VersionId=version_id,
         )
     except Exception as e:
         typer.echo(f"error : {e}")
