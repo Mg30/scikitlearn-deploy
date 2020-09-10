@@ -29,7 +29,7 @@ def delete_bucket(name: str):
 
 
 @app.command()
-def upload(name: str, model: str, tag:str):
+def upload(name: str, model: str, tag: str):
     try:
         key = os.path.basename(model)
         s3 = boto3.client("s3")
@@ -48,7 +48,7 @@ def upload(name: str, model: str, tag:str):
                     }
                 ],
             },
-            VersionId=latest
+            VersionId=latest,
         )
     except Exception as e:
         typer.echo(f"error : {e}")
@@ -60,8 +60,13 @@ def list_objects(name: str):
         client = boto3.client("s3")
         objects = client.list_object_versions(Bucket=name)
         for version in objects["Versions"]:
-            print(
-                f"Key: {version['Key']} VersionId: {version['VersionId']} IsLatest: {version['IsLatest']} LastModified: {version['LastModified']}"
+            key = version["Key"]
+            version_id = version["VersionId"]
+            response = client.get_object_tagging(
+                Bucket=name, Key=key, VersionId=version_id
+            )
+            typer.echo(
+                f"Key: {key} VersionId: {version_id} IsLatest: {version['IsLatest']} LastModified: {version['LastModified']} Tag: {response['TagSet']}"
             )
     except Exception as e:
         typer.echo(f"error : {e}")
