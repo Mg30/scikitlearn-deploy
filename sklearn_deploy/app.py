@@ -28,11 +28,21 @@ def delete_bucket(name: str):
         typer.echo(f"error : {e}")
 
 @app.command()
+def upload(name: str, model:str):
+    try:
+        s3 = boto3.client('s3')
+        s3.put_object(Bucket=name,Body=model, Key=model)
+        typer.echo(f"{model} uploaded")
+    except Exception as e:
+        typer.echo(f"error : {e}")
+
+
+@app.command()
 def list_objects(name: str):
     try:
-        s3 = boto3.resource('s3')
-        objects = s3.Bucket(name).object_versions.all()
-        print(objects)
-
+        client = boto3.client('s3')
+        objects = client.list_object_versions(Bucket=name)
+        for version in objects["Versions"]:
+                print(f"Key: {version['Key']} VersionId: {version['VersionId']} IsLatest: {version['IsLatest']} LastModified: {version['LastModified']}")
     except Exception as e:
         typer.echo(f"error : {e}")
