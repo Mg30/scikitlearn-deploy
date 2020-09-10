@@ -1,6 +1,7 @@
+from distutils.version import Version
 import typer
 import boto3
-
+import os
 
 app = typer.Typer()
 
@@ -28,11 +29,27 @@ def delete_bucket(name: str):
 
 
 @app.command()
-def upload(name: str, model: str):
+def upload(name: str, model: str, tag:str):
     try:
+        key = os.path.basename(model)
         s3 = boto3.client("s3")
-        s3.put_object(Bucket=name, Body=model, Key=model)
+        s3.upload_file(model, name, key)
         typer.echo(f"{model} uploaded")
+        objects = s3.list_object_versions(Bucket=name)
+        (latest,) = [obj for obj in objects["Versions"] if obj[" IsLatest"]]
+        s3.put_object_tagging(
+            Bucket=name,
+            Key=key,
+            Tagging={
+                "TagSet": [
+                    {
+                        "Key": "Key3",
+                        "Value": tag,
+                    }
+                ],
+            },
+            VersionId=latest
+        )
     except Exception as e:
         typer.echo(f"error : {e}")
 
