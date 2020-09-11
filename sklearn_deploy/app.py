@@ -29,7 +29,7 @@ def delete_bucket(name: str):
 
 
 @app.command()
-def upload(name: str, model: str, tag: str):
+def upload(name: str, model: str, tag: str = typer.Option(...)):
     try:
         key = os.path.basename(model)
         s3 = boto3.client("s3")
@@ -44,7 +44,7 @@ def upload(name: str, model: str, tag: str):
             Tagging={
                 "TagSet": [
                     {
-                        "Key": "Key3",
+                        "Key": "Version",
                         "Value": tag,
                     }
                 ],
