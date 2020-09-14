@@ -14,13 +14,25 @@ jobs:
     steps:
     - name: cloning repo
       uses: actions/checkout@v2
-    - name: deployment
+    - name: api rest deployment
+      id: api
       uses: Mg30/action-deploy-sklearn@v1
       with:
         service_name: apirestv1
         stage: dev
         aws_default_region : ${{env.AWS_DEFAULT_REGION}}
-        aws_s3_bucket: test-from-cli-tool
-        model_key: models/airbnb_regressor.pickle
-        model_version: ukGYJXZC9h5OlO1alQGxBOH9ZBqJ8Hqc
+        aws_s3_bucket: deploy-models-skleanr
+        model_key: airbnb_regressor.pickle
+        model_version: 11j3aXER32C7exuanDNKvOea0FxJwXgo
+    - name: building vue form
+      uses : Mg30/vue-form-sklearn
+      with:
+        endpoint: {{steps.api.outputs.endpoint}}
+    - name: Deploy frontend to github page
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BASE_BRANCH: master
+        BRANCH: gh-pages
+        FOLDER: dist
 
