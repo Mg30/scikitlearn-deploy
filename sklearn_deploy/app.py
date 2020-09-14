@@ -71,3 +71,25 @@ def list_objects(name: str):
             )
     except Exception as e:
         typer.echo(f"error : {e}")
+
+@app.command()
+def update_lambda(func_name:str, version_id:str):
+    try:
+        client = boto3.client("lambda")
+        response = client.get_function_configuration(
+            FunctionName=func_name,
+        )
+        old_env = response["Environment"]["Variables"]
+        old_env["MODEL_VERSION"] = version_id
+        response = client.update_function_configuration(
+            FunctionName=func_name,
+            Environment={
+                'Variables': old_env
+            }
+        )
+        if response["ResponseMetadata"]["HTTPStatusCode"] == 200:
+            typer.echo("Updated")
+        else:
+            raise ValueError(response)
+    except Exception as e:
+        typer.echo(f"error : {e}")
