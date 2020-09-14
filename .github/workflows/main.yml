@@ -25,7 +25,7 @@ jobs:
         model_key: airbnb_regressor.pickle
         model_version: 11j3aXER32C7exuanDNKvOea0FxJwXgo
     - name: building vue form
-      uses : Mg30/vue-form-sklearn
+      uses : Mg30/vue-form-sklearn@v1
       with:
         endpoint: ${{steps.api.outputs.endpoint}}
     - name: Deploy frontend to github page
