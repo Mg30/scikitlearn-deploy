@@ -27,7 +27,7 @@ jobs:
     - name: building vue form
       uses : Mg30/vue-form-sklearn
       with:
-        endpoint: {{steps.api.outputs.endpoint}}
+        endpoint: ${{steps.api.outputs.endpoint}}
     - name: Deploy frontend to github page
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
