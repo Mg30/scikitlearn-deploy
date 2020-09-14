@@ -1,0 +1,101 @@
+---
+title: "'AIRBNBMLV1'"
+units: "'$/night'"
+home:
+  - title: About
+    subtitle: Informations
+    content: Side project to deploy machine learning model to AWS lambda
+schema:
+  fields:
+    - type: select
+      label: Neighbourhood
+      model: neighbourhood
+      required: "true"
+      validator:
+        - required
+      values:
+        - Entrepôt
+        - Hôtel-de-Ville
+        - Opéra
+        - Ménilmontant
+        - Louvre
+        - Popincourt
+        - Buttes-Montmartre
+        - Élysée
+        - Panthéon
+        - Gobelins
+        - Luxembourg
+        - Buttes-Chaumont
+        - Palais-Bourbon
+        - Reuilly
+        - Bourse
+        - Vaugirard
+        - Batignolles-Monceau
+        - Observatoire
+        - Temple
+        - Passy
+    - type: select
+      label: Room type
+      model: room_type
+      required: "true"
+      validator:
+        - required
+      values:
+        - Entire home/apt
+        - Private room
+        - Shared room
+        - Hotel room
+    - type: input
+      inputType: number
+      label: Minimum night
+      model: minimum_nights
+      required: "true"
+      validator:
+        - required
+    - type: select
+      label: Month
+      required: "true"
+      model: mois
+      validator:
+        - required
+      values:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+    - type: input
+      inputType: number
+      label: Guests
+      required: "true"
+      validator:
+        - required
+      model: voyageurs
+    - type: input
+      inputType: number
+      label: Bedrooms
+      required: "true"
+      validator:
+        - required
+      model: chambres
+    - type: input
+      inputType: number
+      required: "true"
+      label: Beds
+      validator:
+        - required
+      model: lits
+    - type: input
+      inputType: number
+      required: "true"
+      label: Bath rooms
+      validator:
+        - required
+      model: salle_de_bains
