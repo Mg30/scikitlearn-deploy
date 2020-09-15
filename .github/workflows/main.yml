@@ -24,6 +24,8 @@ jobs:
         aws_s3_bucket: deploy-models-skleanr
         model_key: airbnb_regressor.pickle
         model_version: 11j3aXER32C7exuanDNKvOea0FxJwXgo
+    - name: Get the output
+      run: echo "Endpoint ${{ steps.api.outputs.endpoint }}" 
     - name: building vue form
       uses : Mg30/vue-form-sklearn@v1
       with:
