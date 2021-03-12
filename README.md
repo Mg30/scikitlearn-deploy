@@ -18,11 +18,11 @@ It is possible to configure the infrastructure via the AWS console but here we w
 The GitHub action uses the serverless framework under the hood in order to package the fast REST API, the prediction worker, and takes care of deploying the underlying infrastructure.
 
 ## Setting up the project
-I will use poetry to set up the project structure and manage dependencies, feel free to adapt it if you want to use pip with a virtual environment.
-1. Create a new project with poetry new <name_of_project>
-2. cd to the created folder
-3. Run the following command to install the project's dependencies : `poetry add pandas scikit-learn pydantic typer boto3`
-4. Create an app.py file in <your_package_name> folder that is in your root directory.
+clone this repo
+
+1. clone this repo
+2.  run `poetry install`
+3. Create an app.py file in <your_package_name> folder that is in your root directory.
 
 ## Setting aws 
 
